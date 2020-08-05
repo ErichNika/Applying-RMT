@@ -1,11 +1,18 @@
 Important References:
 
-(1) applying RMT for determinging a threshold value:
+(1) might have found some open-sourced C++ code to do exactly what we are looking for:
+       
+    https://github.com/spficklin/RMTGeneNet 
+    
+    I still need to check it out and test it myself, see how the calculations compare with mine.
+    It even inlcudes the option to generate and evaluate mutual information matrices, and was designed to be applied to biological data.
+
+(2) applying RMT for determinging a threshold value:
 
     https://scholarsmine.mst.edu/cgi/viewcontent.cgi?article=8652&context=masters_theses
 
 
-(2) Description of R package: RMThreshold -- outdated package but still insightful
+(3) Description of R package: RMThreshold -- outdated package but still insightful
 
     https://cran.r-project.org/web/packages/RMThreshold/RMThreshold.pdf
 
