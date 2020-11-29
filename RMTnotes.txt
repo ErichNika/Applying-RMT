@@ -17,5 +17,7 @@ Important References:
     https://cran.r-project.org/web/packages/RMThreshold/RMThreshold.pdf
 
 
-
+(4) Found a new project on PyPi for RMT: 
+       https://pypi.org/project/empyricalRMT/
+       
     
