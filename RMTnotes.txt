@@ -16,8 +16,8 @@ Important References:
 
     https://cran.r-project.org/web/packages/RMThreshold/RMThreshold.pdf
 
-
+Update: 11/29/20
 (4) Found a new project on PyPi for RMT: 
        https://pypi.org/project/empyricalRMT/
        
-    
+I am working on the code for the semi circle law (which I meant to include initially), I will be uploadig that as soon as I can.     
