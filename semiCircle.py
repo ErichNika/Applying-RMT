@@ -39,11 +39,8 @@ def _gen_related_data(n, df_type='int'):   # needs work
     for i in range(n):
         arr.append([])
         for j in range(n):
-            if j == i:
-                arr[i].append(1)
-
-            else:
-                arr[i].append(random.uniform(0, 1))
+            signal = int(i/5)   # small divisor --> less random,  large divisor --> more random
+            arr[i].append(random.randrange(-100, 100+signal))
 
     idx_labels = ['row_{}'.format(i) for i in range(n)]
     col_labels = ['col_{}'.format(i) for i in range(n)]
@@ -187,15 +184,21 @@ def _semi_circle(corr_df):
     threshold = 0
     return threshold
 
+
+def _compute_threshold_value(matrix):
+    # todo cannot begin until we know the expected amount of signals.
+    t = 1.
+    return t
+
+
 """
     Run and Test
 """
 
 # seed = 4
-# corr_df = _gen_random_df(seed=seed, df_type='float')
 
-
-random_theory_threshold = _semi_circle(_gen_random_data())
+# random_theory_threshold = _semi_circle(_gen_random_data())
+random_theory_threshold = _semi_circle(_gen_related_data(1500, df_type='int'))
 
 
 # expected_random_theory_threshold = 0

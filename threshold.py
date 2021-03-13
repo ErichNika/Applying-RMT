@@ -37,8 +37,8 @@ def _gen_correlated_data(n, seed=5, df_type='int'):
     arr = np.random.randint(low=0, high=1024, size=(n, n))
     for i in range(len(arr)):
         for j in range(len(arr)):
-            if j % 7 == 0:         # add signals here: the greater the module (less signals), the higher the threshold
-                arr[i][j] = i       # generate perfect correlations (1.0)
+            if j % 2 == 0:         # add signals here: the greater the module (less signals), the higher the threshold
+                arr[i][j] = i      # generate perfect correlations (1.0)
 
     arr = np.asarray(arr)
     # arr = normalize_entries(arr, 'no')  # 'yes' or 'no' for mean 0, variance 1 of initial data
@@ -130,8 +130,8 @@ def plot(nnsd, n):
 
     NOTE: Not necessary to determine the threshold value, but helpful sanity check
     """
-
-    x = np.linspace(0, 10)          # domain of graph
+    d = 10
+    x = np.linspace(0, d)          # domain of graph
 
     # Wigner-Dyson Distribution:
     goe = [(x[i] * pi / 2) * math.exp((-1 * pi * x[i] ** 2) / 4) for i in range(0, len(x))]
@@ -147,7 +147,7 @@ def plot(nnsd, n):
     plt.ylabel("Density")
     plt.hist(nnsd, bins=n, density=True)
     plt.xlabel("Eigenvalues")
-    plt.axis([-0.1, x, 0, 1.0])  # window
+    plt.axis([-0.1, d, 0, 1.0])  # window
     plt.legend(loc="upper right")
     plt.show()
 
@@ -215,7 +215,7 @@ def _compute_threshold_w_random_theory(corr_df):
 
     signals = lower_tri[lower_tri >= threshold]
     sig_percent = (signals.size / lower_tri.size) * 100  # percent of signals in data
-    print("Potential Signals Detected: ", signals.size, ", %{}".format(sig_percent))
+    print("Potential Signals Detected: ", round(signals.size, 3), ", %{}".format(sig_percent))
 
     # print(signals)                                     # print values of signals
     # x = np.where(lower_tri >= threshold)
@@ -319,20 +319,20 @@ def calculate_threshold_value(arr, thresh, thresh_dec):
         #   if yes: recalculate candidate threshold, t = t - dec., go to step (2)
         #   if no: return threshold value
 
-        print("Chi-squared statistic: ", result, "Threshold value: ", thresh)
+        print("chi-test: ", np.round(result, 2), "dec", thresh_dec, "thresh: ", np.round(thresh, 4))
 
-    if thresh_dec > 0.0001:  # check 0.1, 0.01, 0.001 places to determine precise threshold value
+    if thresh_dec > 0.0001:  # check 0.1, 0.01, 0.001 places to determine precise threshold value.
         return calculate_threshold_value(original, thresh + thresh_dec, thresh_dec / 10)
-    else:
-        # plot(nnsd, n)      # plot function for sanity check: make sure it has diverged and somewhat resembles GOE
-        return thresh
+
+    plot(nnsd, n)  # plot function for sanity check: make sure it has diverged and somewhat resembles GOE
+    return thresh
 
 
 # ------------------------------------------------------------------------------------------------------------------- #
 
 
 # run and test random matrix theory
-random_theory_threshold = _compute_threshold_w_random_theory(_gen_correlated_data(1000))  # parameter is len of matrix
+random_theory_threshold = _compute_threshold_w_random_theory(_gen_correlated_data(1000))  # parameter is dim of matrix
 expected_random_theory_threshold = 0
 # assert expected_random_theory_threshold == random_theory_threshold
 
@@ -358,8 +358,8 @@ the Gaussian kernel density or a cubic spline interpolation on the cumulative di
 function"
 
 After calculating the eigenvalues, "The eigenvalue spectrum is then unfolded, i.e. it is calibrated in such a 
-way that the average global spacing between the eigenvalues is constant over the whole spectrum. The latter can be 
-tracked by setting plot.spacing = T. Two methods are provided for unfolding: one method is based on calculation of
+way that the average global spacing between the eigenvalues is constant over the whole spectrum....
+Two methods are provided for unfolding: one method is based on calculation of
 the Gaussian kernel density of the eigenvalue spectrum; another method is based on fitting
 a cubic spline function to the cumulative empirical eigenvalue distribution"
 
